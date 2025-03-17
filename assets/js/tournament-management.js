@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     fetchTournaments();
     setupEventListeners();
 });
@@ -23,19 +23,19 @@ function renderTournaments(tournaments) {
         const tournamentElement = document.createElement('div');
         tournamentElement.className = 'tournament';
         tournamentElement.innerHTML = `
-        <h3>${tournament.Name}</h3>
-        <p>Start Date: ${new Date(tournament.StartDate).toLocaleDateString()}</p>
-        <p>End Date: ${new Date(tournament.EndDate).toLocaleDateString()}</p>
-        <p>Location: ${tournament.Location}</p>
-        <button onclick="signUpForTournament(${tournament.TournamentID})">Sign Up</button>
-      `;
+            <h3>${tournament.Name}</h3>
+            <p>Start Date: ${new Date(tournament.StartDate).toLocaleDateString()}</p>
+            <p>End Date: ${new Date(tournament.EndDate).toLocaleDateString()}</p>
+            <p>Location: ${tournament.Location}</p>
+            <button onclick="signUpForTournament(${tournament.TournamentID})">Sign Up</button>
+        `;
         tournamentsContainer.appendChild(tournamentElement);
     });
 }
 
 async function signUpForTournament(tournamentId) {
-    const userId = getCurrentUserId(); // Implement this function to get the current user's ID
-    const teamId = getCurrentUserTeamId(); // Implement this function to get the current user's team ID
+    const userId = getCurrentUserId();
+    const teamId = getCurrentUserTeamId();
 
     if (!teamId) {
         alert('You must be part of a team to sign up for a tournament.');
@@ -96,10 +96,40 @@ async function processPayment(userId, teamId, tournamentId) {
 }
 
 function setupEventListeners() {
-    // Add any additional event listeners here
+    const createTournamentBtn = document.getElementById('createTournamentBtn');
+    if (createTournamentBtn) {
+        createTournamentBtn.addEventListener('click', createTournament);
+    }
 }
 
-// Helper functions to get current user and team IDs
+async function createTournament() {
+    const name = document.getElementById('tournamentName').value;
+    const startDate = document.getElementById('tournamentStartDate').value;
+    const endDate = document.getElementById('tournamentEndDate').value;
+    const location = document.getElementById('tournamentLocation').value;
+
+    try {
+        const response = await fetch('/add-tournament', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, startDate, endDate, location }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create tournament');
+        }
+
+        const result = await response.json();
+        alert('Tournament created successfully!');
+        fetchTournaments();
+    } catch (error) {
+        console.error('Error creating tournament:', error);
+        alert('Failed to create tournament');
+    }
+}
+
 function getCurrentUserId() {
     // Implement this function to return the current user's ID
     // You might get this from a session or local storage
