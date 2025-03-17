@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #13505B, #0E3E4E);
+    color: #fff;
+    padding: 1rem;
+}
+
+.container {
+    max-width: 70vw;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 20px;
+}
+
+.header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: #9EF01A;
+}
+
+.schedule-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.schedule-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr)); /* Adjust columns to fit 3 cards per row */
+    row-gap: 1em;
+    justify-self: center;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.schedule-card {
+    background: rgba(17, 157, 164, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.schedule-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card-header {
+    background: linear-gradient(90deg, rgba(19, 80, 91, 0.9) 0%, rgba(19, 80, 91, 0.7) 100%);
+    padding: 1rem;
+    text-align: center;
+}
+
+.card-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #9EF01A;
+}
+
+.card-body {
+    padding: 1.2rem;
+}
+
+.card-body .match-info {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.card-body .time {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #13505B;
+    text-align: center;
+}
+
+/* FOR BUTTONS */
+button {
+    background: linear-gradient(90deg, rgba(19, 80, 91, 0.9) 0%, rgba(19, 80, 91, 0.7) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 20px;
+    margin: 5px;
+    color: #9EF01A;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+    }
+}

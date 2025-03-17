@@ -1,0 +1,44 @@
+.square-img {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/* Image Shadows */
+.shadow-darker {
+    box-shadow: -20px 20px #0B3239;
+    border-radius: 10px;
+}
+
+.role-dark, .role-light {
+    display: flex;              /* Enable flexbox */
+    flex-direction: column;     /* Stack children vertically */
+    justify-content: center;    /* Vertically center the content */
+    align-items: center;        /* Horizontally center the content */
+    background-color: #13505B;
+    color: white;
+    border-radius: 10px;
+    padding: 30px;
+    transition: transform 0.2s ease-in-out;
+    height: 100%;
+}
+
+.role-dark h2, .role-light h2 {
+    color: #119DA4;             /* Title color adjustment for role-dark */
+}
+
+.role-dark:hover, .role-light:hover {
+    transform: translateY(-5px);
+}
+
+.role-light {
+    background-color: #119DA4;
+    color: black;
+}
+
+.role-light h2 {
+    color: #13505B;             /* Title color adjustment for role-light */
+}

@@ -1,0 +1,37 @@
+<!-- First Team Section -->
+  <div class="team-section">
+    <p class="team-title">Team 1-[Name]</p>
+    <div class="players-container">
+      <div class="player-card">
+        <img src="/media/img/student black-male-ge3ccaa24c_1280.jpg" alt="Player picture">
+        <p>Tim (Leader)</p>
+      </div>
+      <div class="player-card">
+        <img src="/media/img/student student-g3ad8fc5db_1280.jpg" alt="Player picture">
+        <p>Bob</p>
+      </div>
+      <div class="player-card">
+        <img src="/media/img/student boy-g2ba3e74a1_1280.jpg" alt="Player picture">
+        <p>Charles</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Team Section (New) -->
+  <div class="team-section team-section-alt">
+    <p class="team-title team-title-alt">Team 2-[Name]</p>
+    <div class="players-container">
+      <div class="player-card">
+        <img src="/media/img/student young-man-g13d37ca5c_1280.jpg" alt="Player picture">
+        <p class="player-name-alt">Alex (Leader)</p>
+      </div>
+      <div class="player-card">
+        <img src="/media/img/student woman-g39958ff5b_1280.jpg" alt="Player picture">
+        <p class="player-name-alt">Jordan</p>
+      </div>
+      <div class="player-card">
+        <img src="/media/img/student woman-g7b42a69a8_1280.jpg" alt="Player picture">
+        <p class="player-name-alt">Sam</p>
+      </div>
+    </div>
+  </div>

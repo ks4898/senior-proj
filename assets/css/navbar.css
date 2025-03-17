@@ -1,0 +1,94 @@
+/* NAVBAR */
+.navbar {
+    background-color: #003f4f !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 40px !important;
+    height: 60px !important;
+    /*width: 100%;*/
+}
+
+/* Aardvark Games clickable logo */
+.navbar-logo {
+    color: #119DA4 !important;
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    text-shadow: 2px 2px 3px black !important;
+}
+
+/* Navbar links container */
+.navbar-links {
+    display: flex !important;
+    align-items: center !important;
+    gap: 25px !important;
+    height: 100% !important;
+    text-shadow: 0.5px 1px black !important;
+}
+
+.nav-link,
+.nav-link:visited {
+    color: #119DA4 !important;
+    /* Keep visited links the same as normal */
+}
+
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+/* Default link styles */
+.nav-link {
+    color: #119DA4;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 2px 2px 2px black;
+    font-size: 1.1rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+}
+
+/* Hover tab effect */
+.nav-link:hover {
+    background-color: #119DA4;
+    color: #00303b !important;
+    font-weight: bold;
+    text-shadow: none;
+}
+
+/* Clicked tab effect */
+.nav-link:active {
+    background-color: #0d666b !important;
+    color: #003f4f !important;
+    font-weight: bolder !important;
+}
+
+/* Selected tab effect */
+.nav-link.active {
+    background-color: #119DA4 !important;
+    color: #003f4f !important;
+    padding: 10px 12px !important;
+    font-weight: bold !important;;
+    text-decoration: none !important;;
+    text-shadow: none !important;;
+}
+
+/* Style account tab */
+.nav-link.account-style {
+    color: #119DA4 !important;
+    text-shadow: 2px 2px 2px black !important;
+}
+
+/* Hover account */
+.nav-link.account-style:hover {
+    background-color: #119DA4 !important;
+    color: #00303b !important;
+    text-shadow: none !important;
+}

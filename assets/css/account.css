@@ -1,0 +1,213 @@
+html, section {
+    background-color: #041C20 !important;
+}
+
+/* General Styles */
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #041C20;
+    color: #fff;
+}
+
+/* Table */
+.user-table-container {
+    overflow-y: auto;
+    max-height: 300px;
+    margin-top: 20px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #1f2d34;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.user-table th {
+    background-color: #1d3a45;
+}
+
+.user-table tbody tr:hover {
+    background-color: #3a4e5c;
+    cursor: pointer;
+}
+
+.user-table .selected {
+    background-color: #3a4e5c;
+}
+
+/* Buttons */
+.btn-link {
+    color: #9EF01A;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+/* Search Bar */
+.search-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.search-container input {
+    width: 50%;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #333;
+    color: black;
+}
+
+/* Modal */
+.modal-content {
+    background-color: #1f2d34;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #333;
+}
+
+.modal-title {
+    color: #9EF01A;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-label {
+    color: #9EF01A;
+    font-weight: bold;
+}
+
+.form-control {
+    background-color: #041C20;
+    border: 1px solid #333;
+    color: #fff;
+}
+
+.form-select {
+    background-color: #041C20;
+    border: 1px solid #333;
+    color: #fff;
+}
+
+.modal-footer {
+    border-top: 1px solid #333;
+}
+
+/* Modal Button Styles */
+.btn-secondary {
+    background-color: #444;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #9EF01A;
+    color: #13505B;
+    border: #13505B;
+}
+
+.btn-primary:hover {
+    background-color: #119DA4;
+    color: #9EF01A;
+    border: #9EF01A;
+}
+
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+
+/* Disabled button style */
+#editUserButton:disabled {
+    pointer-events: none;  /* Prevent click */
+    opacity: 0.5; /* Make it look faded */
+}
+
+
+/* Ensuring Modal Overlay Blocks Background Interaction */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Section */
+section#role-management {
+    padding: 40px 0;
+}
+
+h1 {
+    color: #9EF01A;
+}
+
+#role-management {
+    padding-bottom: 50px !important;
+    border-bottom-style: ridge;
+    border-bottom-width: 15px;
+    border-color: #003f4f;
+}
+#college-management {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+    border-bottom-style: ridge;
+    border-bottom-width: 15px;
+    border-color: #003f4f;
+}
+#team-management {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+    border-bottom-style: ridge;
+    border-bottom-width: 15px;
+    border-color: #003f4f;
+}
+
+#collegeAction {
+    padding: 0;
+}
+
+.user-table-container {
+    padding: 0 !important;
+}
+
+.selected {
+    background-color: lightblue;
+}
+
+#admin-box {
+    position: absolute;
+    /*top: 25px;*/
+    right: 2vw;
+    top: 5.5vh;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .search-container input {
+        width: 80%;
+    }
+
+    .user-table-container {
+        max-height: 200px;
+    }
+}

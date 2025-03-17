@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A New World - Standings</title>
+    <link rel="stylesheet" href="/css/brackets.css">
+</head>
+<body>
+    <script src="/js/handleacc.js"></script>
+
+    <h1>Tournament Standings</h1>
+    <div id="matches">
+        <div class="match">
+            <div class="team">
+                <img src="/media/img/kyoto-university.jpg" alt="Team B">
+                <input class="name" type="text" value="Team B">
+            </div>
+            <input type="number" class="score" value="0">
+            <span>vs</span>
+            <input type="number" class="score" value="0">
+            <div class="team">
+                <img src="/media/img/rit-emblem.jpg" alt="Team B">
+                <input class= "name" type="text" value="Team B">
+            </div>
+            <button class="remove-btn" onclick="removeMatch(this)">X</button>
+        </div>
+    </div>
+    <button onclick="addMatch()">Add Match</button>
+    <script src="/js/brackets.js"></script>
+</body>
+</html>

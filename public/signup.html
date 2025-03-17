@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - A New World</title>
+    <link rel="stylesheet" href="/css/formstyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <style>
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear {
+            display: none;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 0.52vw;
+        }
+
+        .input-group input {
+            width: 11.58vw;
+        }
+
+        .input-group-text {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/check-session") // an endpoint to check session
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        window.location.href = "/"; // redirect to home page if logged in already
+                    }
+                });
+            document.getElementById('passwordToggle').addEventListener('click', function () {
+                const passwordInput = document.getElementById('password');
+                const form = document.getElementsByClassName('form-group')[2];
+                const eyeIcon = document.getElementById('eyeIcon');
+                const inputGroup = document.getElementsByClassName('input-group')[0];
+
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    passwordInput.setAttribute("style", "margin-left: 3px;");
+                    passwordInput.setAttribute("style", "margin-right: 0;");
+                    inputGroup.setAttribute("style", "margin-left: 12px;");
+                    inputGroup.setAttribute("style", "gap: 8px;");
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = "password";
+                    passwordInput.setAttribute("style", "margin-left: 0;");
+                    passwordInput.setAttribute("style", "margin-right: 0;");
+                    inputGroup.setAttribute("style", "margin-left: 0;");
+                    inputGroup.setAttribute("style", "gap: 10px;");
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
+    <div class="form-container">
+        <h2>Create an Account</h2>
+        <form id="signup-form">
+            <div class="form-group">
+                <label for="username">Your Name:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" required>
+                    <span class="input-group-text" id="passwordToggle">
+                        <i class="fa fa-eye" id="eyeIcon"></i>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" style="border-radius: 15px;">Sign Up</button>
+            <p id="signup-message"></p>
+        </form>
+        <p>Already have an account? <a href="login.html">Login Here!</a></p>
+        <p>Return back to the home page: <a href="index.html">Home</a></p>
+    </div>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, email, password }),
+            });
+
+            const data = await response.json();
+            const messageElement = document.getElementById("signup-message");
+            if (response.ok) {
+                messageElement.style.color = "green";
+                messageElement.textContent = data.message + " Redirecting to login...";
+                setTimeout(() => {
+                    window.location.href = "login.html"; // redirect to login page after signing up
+                }, 2000);
+            } else {
+                messageElement.textContent = data.message;
+            }
+        });
+    </script>
+</body>
+
+</html>

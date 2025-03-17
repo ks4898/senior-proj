@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Kanit', sans-serif !important;
+    background-color: #85c7c7;
+    /*#d2dfe0*/
+    color: #13505B;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.9;
+}
+
+.form-container {
+    background: #e2eff1;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+form {
+    width: 80%;
+    margin-top: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    width: 85%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #119DA4;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #119DA4;
+    color: white;
+    border: none;
+    /*border-radius:20px;*/
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0e8c92;
+}
+
+/*p {
+    margin-top: 20px;
+}*/
+
+h2 {
+    padding: 10px;
+    margin: 20px;
+    font-weight: bolder;
+    font-size: 35px;
+}
+
+a {
+    text-decoration: none;
+    color: #13505B;
+    font-weight: bold;
+}
+
+p {
+    /*dbd*/
+    padding: 10px;
+}
+
+a:hover {
+    color: #119DA4;
+}
+
+#signup-message {
+    color: #13505B;
+    text-align: center;
+    max-width: 32ch;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+#login-message {
+    color: #13505B;
+    text-align: center;
+    max-width: 32ch;
+    padding: 10px;
+    margin-top: 5px;
+}

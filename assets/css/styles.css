@@ -1,0 +1,410 @@
+html {
+    background-color: #F1FDFF;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+    font-family: 'Kanit', sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-shadow: 0.5px 1px black;
+}
+
+strong {
+    color: #9EF01A;
+}
+
+/* ----------------------------------------------------------- */
+
+/* Image Shadows */
+.shadow-dark {
+    box-shadow: -20px 20px #13505B;
+    border-radius: 10px;
+}
+
+.shadow-light {
+    box-shadow: -20px 20px #119DA4;
+    border-radius: 10px;
+}
+
+/* ----------------------------------------------------------- */
+
+/* Section Styles (Light and Dark) */
+.section-light {
+    background-color: #F1FDFF;
+    color: black;
+}
+
+.section-light h1 {
+    color: #13505B;
+    font-weight: bold;
+}
+
+.section-dark {
+    background-color: #13505B;
+    color: white;
+}
+
+.section-dark h1 {
+    color: #9EF01A;
+    font-weight: bold;
+}
+
+/* ----------------------------------------------------------- */
+
+/* Custom Button */
+.btn-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00576d;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    border-style: outset;
+    /*transition: background-color 0.3s ease, color 0.3s ease;*/
+}
+
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:visited {
+    cursor: pointer;
+    text-shadow: none;
+    text-decoration: none !important;
+    text-decoration-style: none !important;
+    font-style: normal;
+    color: #ffffff !important;
+}
+
+.btn-delete {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #F84D50;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: white;
+    color: #F84D50;
+}
+
+/* ----------------------------------------------------------- */
+
+/* Tournament Section Styles */
+.tournament-container {
+    background-color: #1E1E1E;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.tournament-container h1 {
+    color: #9EF01A;
+    font-weight: bold;
+}
+
+.match-container {
+    background-color: #13505B;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.team-box {
+    width: 50px;
+    height: 50px;
+    background-color: #9EF01A;
+    border-radius: 5px;
+}
+
+/* Team boxes placeholder, supposed to be images later */
+.team-1-box {
+    background-color: #9EF01A;
+}
+
+.team-2-box {
+    background-color: #119DA4;
+}
+
+.row .col-5,
+.row .col-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p.mb-0 {
+    margin-bottom: 0;
+}
+
+.winner {
+    color: #9EF01A !important;
+}
+
+.loser {
+    color: #041C20 !important;
+    text-decoration: line-through;
+}
+
+/* ----------------------------------------------------------- */
+/* Carousel */
+
+.carousel-inner {
+    background-color: #13505B;
+    height: 400px;
+}
+
+.carousel-item {
+    background-color: #13505B;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+}
+
+/* Placeholder Images, needs work */
+#college-1 {
+    background-image: url("../media/img/college1.jpg");
+}
+
+#college-2 {
+    background-image: url("../media/img/college2.jpg");
+}
+
+#college-3 {
+    background-image: url("../media/img/college3.jpg");
+}
+
+.carousel-caption {
+    background-color: #041c205d;
+    color: white;
+    border-radius: 10px;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #003f4f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 60px;
+    /*width: 100%;*/
+}
+
+/* Aardvark Games clickable logo */
+.navbar-logo {
+    color: #119DA4;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 2px 2px 3px black;
+}
+
+/* Navbar links container */
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    height: 100%;
+    text-shadow: 0.5px 1px black;
+}
+
+.nav-link,
+.nav-link:visited {
+    color: #119DA4 !important;
+    /* Keep visited links the same as normal */
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Default link styles */
+.nav-link {
+    color: #119DA4;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 2px 2px 2px black;
+    font-size: 1.1rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+}
+
+/* Hover tab effect */
+.nav-link:hover {
+    background-color: #119DA4;
+    color: #00303b !important;
+    font-weight: bold;
+    text-shadow: none;
+}
+
+/* Clicked tab effect */
+.nav-link:active {
+    background-color: #0d666b !important;
+    color: #003f4f !important;
+    font-weight: bolder !important;
+}
+
+/* Selected tab effect */
+.nav-link.active {
+    background-color: #119DA4 !important;
+    color: #003f4f !important;
+    padding: 10px 12px !important;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+/* Style account tab */
+.nav-link.account-style {
+    color: #119DA4 !important;
+    text-shadow: 2px 2px 2px black !important;
+}
+
+/* Hover account */
+.nav-link.account-style:hover {
+    background-color: #119DA4 !important;
+    color: #00303b !important;
+    text-shadow: none !important;
+}
+
+/* Link display */
+.college-container .btn-link {
+    display: inline-block;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    border: 2px solid;
+}
+
+.college-container .btn-link {
+    background-color: transparent;
+    color: inherit;
+}
+
+.college-container:nth-child(odd) .btn-link {
+    background-color: #13505b !important;
+    color: #F1FDFF !important;
+    border-color: #13505b !important;
+}
+
+
+.college-container:nth-child(even) .btn-link {
+    background-color: #F1FDFF !important;
+    color: #275861 !important;
+    border-color: #275861 !important;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /*padding-left: 10px;*/
+}
+
+.input-group-text {
+    cursor: pointer;
+}
+
+/*#passwordToggle {
+    background-color: inherit;
+}*/
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+@media (max-width: 1000px)  {
+    #admin-box {
+        position: unset;
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .navbar-logo {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        text-shadow: none;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-shadow: none;
+    }
+
+    .nav-link {
+        justify-content: center;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+
+/* MOBILE NAVBAR SUPPORT */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .navbar-logo {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        text-shadow: none;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-shadow: none;
+    }
+
+    .nav-link {
+        justify-content: center;
+        width: 100%;
+        padding: 10px 0;
+    }
+}

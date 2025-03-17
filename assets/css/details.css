@@ -1,0 +1,139 @@
+img {
+    object-fit: cover;
+  }
+
+  .college-info {
+    display: flex;
+    height: 500px;
+  }
+
+  .college-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: rgb(255, 255, 255);
+    width: 65%;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .college-header {
+    font-size: 60px;
+    font-weight: 800;
+    display: flex;
+    color: #10414a;
+  }
+
+  .college-header img {
+    max-width: 100px;
+    align-self: flex-end;
+    margin-left: 5%;
+  }
+
+  .location, .founded {
+    margin: 5px;
+    margin-top: 10px;
+  }
+
+  .college-name {
+    margin-left: 10%;
+    display: flex;
+    max-width: 16ch;
+    line-height: 60px;
+    margin-top: 20px;
+  }
+
+  .location-details {
+    font-size: 18px;
+    margin-left: 10%;
+    color: #10414a;
+    font-weight: 600;
+  }
+
+  .location-details p:last-child {
+    margin-top: -30px;
+  }
+
+  hr {
+    height: 3px;
+    background-color: #13505B;
+    width: 80%;
+    margin-top: 20px;
+  }
+
+  .college-description {
+    font-size: 18px;
+    width: 80%;
+    margin-left: 10%;
+    color: #13505B;
+  }
+
+  .college-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    width: 35%;
+  }
+
+  .college-image {
+    max-height: 250px;
+    border-radius: 15px;
+  }
+
+  /* Team Section */
+  .team-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #13505B;
+  }
+
+  .team-title {
+    color: #9EF01A;
+    font-weight: 700;
+    margin-top: 18px;
+    margin-bottom: 22px;
+    font-size: 25px;
+  }
+
+  .players-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+
+  .player-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .player-card img {
+    width: 250px;
+    height: 250px;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  }
+
+  .player-card p {
+    font-weight: 700;
+    font-size: 20px;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  /* New Team Section (White Background & Black Text) */
+  .team-section-alt {
+    background-color: #FFFFFF;
+  }
+
+  .team-title-alt {
+    color: #000000;
+  }
+
+  .player-name-alt {
+    color: #000000 !important;
+  }
