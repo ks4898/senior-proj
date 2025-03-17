@@ -139,3 +139,34 @@ function getCurrentUserTeamId() {
     // Implement this function to return the current user's team ID
     // You might get this from a session or local storage
 }
+
+// Add this function to allow teams to update their publicity content
+async function updateTeamPublicity(teamId, content) {
+    try {
+      const response = await fetch(`/update-team-publicity/${teamId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update team publicity');
+      }
+  
+      const result = await response.json();
+      alert('Team publicity updated successfully!');
+    } catch (error) {
+      console.error('Error updating team publicity:', error);
+      alert('Failed to update team publicity');
+    }
+  }
+  
+  // Add this to your existing event listeners
+  document.getElementById('updatePublicityBtn').addEventListener('click', function() {
+    const teamId = getCurrentTeamId(); // Implement this function to get the current team's ID
+    const content = document.getElementById('publicityContent').value;
+    updateTeamPublicity(teamId, content);
+  });
+  

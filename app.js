@@ -6,10 +6,7 @@ const session = require("express-session");
 require("dotenv").config(); // safe config
 const { verifyRole } = require("./assets/js/auth.js"); // user authorization
 const errorHandler = require('./assets/js/errorhandler'); // error handling
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
-/* DEPRECATED!
- require('express-async-errors');*/
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // stripe payment processing
 
 const VALID_ROLES = ["User", "Player", "CollegeRep", "Moderator", "Admin", "SuperAdmin"]; // list of all valid roles
 
@@ -620,20 +617,20 @@ app.post("/add-schedule", verifyRole(["SuperAdmin", "Admin"]), async (req, res) 
     );
 });
 
-// post results
-// New route for posting match results
-app.post('/post-match-result', verifyRole(["Admin", "SuperAdmin"]), async (req, res) => {
-    const { matchId, team1Score, team2Score } = req.body;
-    try {
-      await db.promise().execute(
-        'UPDATE Matches SET ScoreTeam1 = ?, ScoreTeam2 = ? WHERE MatchID = ?',
-        [team1Score, team2Score, matchId]
-      );
-      res.json({ success: true, message: 'Match result posted successfully' });
-    } catch (error) {
-      console.error('Error posting match result:', error);
-      res.status(500).json({ success: false, message: 'Failed to post match result' });
-    }
+app.post("/post-results", verifyRole(["SuperAdmin", "Admin"]), async (req, res) => {
+    const { matchId, scoreTeam1, scoreTeam2 } = req.body;
+    const winnerId = scoreTeam1 > scoreTeam2 ? 
+      `(SELECT Team1ID FROM Matches WHERE MatchID = ?)` : 
+      `(SELECT Team2ID FROM Matches WHERE MatchID = ?)`;
+    
+    db.execute(
+      `UPDATE Matches SET ScoreTeam1 = ?, ScoreTeam2 = ?, WinnerID = ${winnerId} WHERE MatchID = ?`,
+      [scoreTeam1, scoreTeam2, matchId, matchId],
+      (err, result) => {
+        if (err) return res.status(500).json({ message: "Database error." });
+        res.json({ message: "Results posted successfully!" });
+      }
+    );
   });
 
 
@@ -874,23 +871,34 @@ app.delete("/delete-user/:userId", verifyRole(["SuperAdmin", "Admin"]), async (r
     }
 });
 
-// process payments
-app.post('/process-payment', (req, res) => {
-    const { userId, teamId, tournamentId, amount } = req.body;
-    db.execute(
-      'INSERT INTO Payments (UserID, TeamID, TournamentID, Amount, Status) VALUES (?, ?, ?, ?, ?)',
-      [userId, teamId, tournamentId, amount, 'Completed'],
-      (err, result) => {
-        if (err) {
-          console.error('Payment processing error:', err);
-          res.status(500).json({ success: false, message: 'Payment processing failed' });
-        } else {
+// process payment
+app.post('/process-payment', async (req, res) => {
+    const { token, amount, teamId, tournamentId } = req.body;
+    try {
+      const charge = await stripe.charges.create({
+        amount: amount * 100,
+        currency: 'usd',
+        source: token,
+        description: 'Tournament registration fee'
+      });
+      
+      // update the database to reflect the payment
+      db.execute(
+        'INSERT INTO Payments (TeamID, TournamentID, Amount, Status) VALUES (?, ?, ?, ?)',
+        [teamId, tournamentId, amount, 'Completed'],
+        (err, result) => {
+          if (err) {
+            console.error('Payment recording error:', err);
+            return res.status(500).json({ success: false, message: 'Failed to record payment' });
+          }
           res.json({ success: true, message: 'Payment processed successfully' });
         }
-      }
-    );
+      );
+    } catch (error) {
+      console.error('Payment processing error:', error);
+      res.status(500).json({ success: false, message: 'Payment processing failed' });
+    }
   });
-
 
 // start the server
 app.listen(port);
