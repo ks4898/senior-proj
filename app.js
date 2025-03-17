@@ -6,6 +6,7 @@ const session = require("express-session");
 require("dotenv").config(); // safe config
 const { verifyRole } = require("./assets/js/auth.js"); // user authorization
 const errorHandler = require('./assets/js/errorhandler'); // error handling
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 /* DEPRECATED!
  require('express-async-errors');*/
@@ -35,12 +36,12 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        httpOnly: true,     // ensure cookie is only accessible by the server
-        secure: false,      // set to true for HTTPS
-        maxAge: 86400000,   // cookie expires in 1 day
-        sameSite: 'lax'     // helps avoid issues with cross-origin cookies
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 86400000,
+      sameSite: 'lax'
     }
-}));
+  }));
 
 /* DEPRECATED!
 function requireAdminAuth(req, res) {
@@ -620,51 +621,51 @@ app.post("/add-schedule", verifyRole(["SuperAdmin", "Admin"]), async (req, res) 
 });
 
 // post results
-app.post("/post-results", verifyRole(["SuperAdmin", "Admin"]), async (req, res) => {
-    const { matchId, scoreTeam1, scoreTeam2 } = req.body;
-
-    const winnerId =
-        scoreTeam1 > scoreTeam2
-            ? `(SELECT Team1ID FROM Matches WHERE MatchID = ?)`
-            : `(SELECT Team2ID FROM Matches WHERE MatchID = ?)`;
-
-    db.execute(
-        `UPDATE Matches SET ScoreTeam1 = ?, ScoreTeam2 = ?, WinnerID = ${winnerId} WHERE MatchID = ?`,
-        [scoreTeam1, scoreTeam2, matchId],
-        (err, result) => {
-            if (err) return res.status(500).json({ message: "Database error." });
-            res.json({ message: "Results posted successfully!" });
-        }
-    );
-});
+// New route for posting match results
+app.post('/post-match-result', verifyRole(["Admin", "SuperAdmin"]), async (req, res) => {
+    const { matchId, team1Score, team2Score } = req.body;
+    try {
+      await db.promise().execute(
+        'UPDATE Matches SET ScoreTeam1 = ?, ScoreTeam2 = ? WHERE MatchID = ?',
+        [team1Score, team2Score, matchId]
+      );
+      res.json({ success: true, message: 'Match result posted successfully' });
+    } catch (error) {
+      console.error('Error posting match result:', error);
+      res.status(500).json({ success: false, message: 'Failed to post match result' });
+    }
+  });
 
 
 // ======================== REPORT GENERATION ========================
 
-app.get("/generate-report", verifyRole(["SuperAdmin", "Admin"]), async (req, res) => {
-    db.execute(
-        `SELECT t.Name AS TeamName, u.Name AS UniversityName
-       FROM Teams t
-       JOIN University u ON t.UniversityID = u.UniversityID`,
-        [],
-        async (err, results) => {
-            if (err) return res.status(500).json({ message: "Database error." });
-
-            // generate CSV report
-            let csvContent =
-                "Team Name,University Name\n" +
-                results.map(row => `${row.TeamName},${row.UniversityName}`).join("\n");
-
-            // send as downloadable file
-            res.setHeader("Content-Type", "text/csv");
-            res.setHeader(
-                "Content-Disposition",
-                'attachment; filename="team-university-report.csv"'
-            );
-            res.send(csvContent);
-        }
-    );
-});
+// New route for generating tournament report
+app.get('/generate-report', verifyRole(["Admin", "SuperAdmin"]), async (req, res) => {
+    try {
+      const [results] = await db.promise().query(`
+        SELECT t.Name AS TeamName, u.Name AS UniversityName, 
+               COUNT(m.MatchID) AS MatchesPlayed, 
+               SUM(CASE WHEN m.WinnerID = t.TeamID THEN 1 ELSE 0 END) AS Wins
+        FROM Teams t
+        JOIN University u ON t.UniversityID = u.UniversityID
+        LEFT JOIN Matches m ON (m.Team1ID = t.TeamID OR m.Team2ID = t.TeamID)
+        GROUP BY t.TeamID
+        ORDER BY Wins DESC
+      `);
+      
+      let report = 'Team Name,University Name,Matches Played,Wins\n';
+      results.forEach(row => {
+        report += `${row.TeamName},${row.UniversityName},${row.MatchesPlayed},${row.Wins}\n`;
+      });
+  
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=tournament_report.csv');
+      res.send(report);
+    } catch (error) {
+      console.error('Error generating report:', error);
+      res.status(500).json({ success: false, message: 'Failed to generate report' });
+    }
+  });
 
 
 // ======================== ADMIN ROLE MANAGEMENT ========================
@@ -872,6 +873,23 @@ app.delete("/delete-user/:userId", verifyRole(["SuperAdmin", "Admin"]), async (r
         res.status(500).json({ message: "Internal server error" });
     }
 });
+
+
+app.post('/process-payment', async (req, res) => {
+    const { token, amount } = req.body;
+    try {
+      const charge = await stripe.charges.create({
+        amount: amount * 100, // Stripe expects amount in cents
+        currency: 'usd',
+        source: token,
+        description: 'Tournament registration fee'
+      });
+      res.json({ success: true, message: 'Payment processed successfully' });
+    } catch (error) {
+      console.error('Payment processing error:', error);
+      res.status(500).json({ success: false, message: 'Payment processing failed' });
+    }
+  });
 
 
 // start the server
