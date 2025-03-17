@@ -1,93 +1,111 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetchMatches();
+    fetchTournaments();
     setupEventListeners();
   });
   
-  async function fetchMatches() {
+  async function fetchTournaments() {
     try {
-      const response = await fetch('/matches');
+      const response = await fetch('/tournaments');
       if (!response.ok) {
-        throw new Error('Failed to fetch matches');
+        throw new Error('Failed to fetch tournaments');
       }
-      const matches = await response.json();
-      renderMatches(matches);
+      const tournaments = await response.json();
+      renderTournaments(tournaments);
     } catch (error) {
-      console.error('Error fetching matches:', error);
+      console.error('Error fetching tournaments:', error);
     }
   }
   
-  function renderMatches(matches) {
-    const matchesContainer = document.getElementById('matches-container');
-    matchesContainer.innerHTML = '';
-    matches.forEach(match => {
-      const matchElement = document.createElement('div');
-      matchElement.className = 'match';
-      matchElement.innerHTML = `
-        <h3>Match ${match.MatchID}</h3>
-        <p>${match.Team1Name} vs ${match.Team2Name}</p>
-        <p>Date: ${new Date(match.MatchDate).toLocaleDateString()}</p>
-        <input type="number" id="score-team1-${match.MatchID}" placeholder="Team 1 Score">
-        <input type="number" id="score-team2-${match.MatchID}" placeholder="Team 2 Score">
-        <button onclick="postResult(${match.MatchID})">Post Result</button>
+  function renderTournaments(tournaments) {
+    const tournamentsContainer = document.getElementById('tournaments-container');
+    tournamentsContainer.innerHTML = '';
+    tournaments.forEach(tournament => {
+      const tournamentElement = document.createElement('div');
+      tournamentElement.className = 'tournament';
+      tournamentElement.innerHTML = `
+        <h3>${tournament.Name}</h3>
+        <p>Start Date: ${new Date(tournament.StartDate).toLocaleDateString()}</p>
+        <p>End Date: ${new Date(tournament.EndDate).toLocaleDateString()}</p>
+        <p>Location: ${tournament.Location}</p>
+        <button onclick="signUpForTournament(${tournament.TournamentID})">Sign Up</button>
       `;
-      matchesContainer.appendChild(matchElement);
+      tournamentsContainer.appendChild(tournamentElement);
     });
   }
   
-  async function postResult(matchId) {
-    const team1Score = document.getElementById(`score-team1-${matchId}`).value;
-    const team2Score = document.getElementById(`score-team2-${matchId}`).value;
-    
-    if (!team1Score || !team2Score) {
-      alert('Please enter scores for both teams');
+  async function signUpForTournament(tournamentId) {
+    const userId = getCurrentUserId(); // Implement this function to get the current user's ID
+    const teamId = getCurrentUserTeamId(); // Implement this function to get the current user's team ID
+  
+    if (!teamId) {
+      alert('You must be part of a team to sign up for a tournament.');
       return;
     }
   
     try {
-      const response = await fetch('/post-match-result', {
+      const response = await fetch('/signup-tournament', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ matchId, team1Score, team2Score }),
+        body: JSON.stringify({ tournamentId, teamId }),
       });
   
       if (!response.ok) {
-        throw new Error('Failed to post match result');
+        throw new Error('Failed to sign up for tournament');
       }
   
-      alert('Match result posted successfully');
-      fetchMatches(); // Refresh the matches list
+      const result = await response.json();
+      if (result.success) {
+        alert('Successfully signed up for the tournament!');
+        processPayment(userId, teamId, tournamentId);
+      } else {
+        alert('Failed to sign up for the tournament: ' + result.message);
+      }
     } catch (error) {
-      console.error('Error posting match result:', error);
-      alert('Failed to post match result');
+      console.error('Error signing up for tournament:', error);
+      alert('Failed to sign up for the tournament');
+    }
+  }
+  
+  async function processPayment(userId, teamId, tournamentId) {
+    const amount = 50; // Set the tournament fee amount
+    try {
+      const response = await fetch('/process-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, teamId, tournamentId, amount }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to process payment');
+      }
+  
+      const result = await response.json();
+      if (result.success) {
+        alert('Payment processed successfully!');
+      } else {
+        alert('Failed to process payment: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      alert('Failed to process payment');
     }
   }
   
   function setupEventListeners() {
-    const generateReportBtn = document.getElementById('generate-report-btn');
-    if (generateReportBtn) {
-      generateReportBtn.addEventListener('click', generateReport);
-    }
+    // Add any additional event listeners here
   }
   
-  async function generateReport() {
-    try {
-      const response = await fetch('/generate-report');
-      if (!response.ok) {
-        throw new Error('Failed to generate report');
-      }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'tournament_report.csv';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error generating report:', error);
-      alert('Failed to generate report');
-    }
-  }  
+  // Helper functions to get current user and team IDs
+  function getCurrentUserId() {
+    // Implement this function to return the current user's ID
+    // You might get this from a session or local storage
+  }
+  
+  function getCurrentUserTeamId() {
+    // Implement this function to return the current user's team ID
+    // You might get this from a session or local storage
+  }

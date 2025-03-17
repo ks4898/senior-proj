@@ -874,21 +874,21 @@ app.delete("/delete-user/:userId", verifyRole(["SuperAdmin", "Admin"]), async (r
     }
 });
 
-
-app.post('/process-payment', async (req, res) => {
-    const { token, amount } = req.body;
-    try {
-      const charge = await stripe.charges.create({
-        amount: amount * 100, // Stripe expects amount in cents
-        currency: 'usd',
-        source: token,
-        description: 'Tournament registration fee'
-      });
-      res.json({ success: true, message: 'Payment processed successfully' });
-    } catch (error) {
-      console.error('Payment processing error:', error);
-      res.status(500).json({ success: false, message: 'Payment processing failed' });
-    }
+// process payments
+app.post('/process-payment', (req, res) => {
+    const { userId, teamId, tournamentId, amount } = req.body;
+    db.execute(
+      'INSERT INTO Payments (UserID, TeamID, TournamentID, Amount, Status) VALUES (?, ?, ?, ?, ?)',
+      [userId, teamId, tournamentId, amount, 'Completed'],
+      (err, result) => {
+        if (err) {
+          console.error('Payment processing error:', err);
+          res.status(500).json({ success: false, message: 'Payment processing failed' });
+        } else {
+          res.json({ success: true, message: 'Payment processed successfully' });
+        }
+      }
+    );
   });
 
 
