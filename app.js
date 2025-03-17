@@ -6,7 +6,7 @@ const session = require("express-session");
 require("dotenv").config(); // safe config
 const { verifyRole } = require("./assets/js/auth.js"); // user authorization
 const errorHandler = require('./assets/js/errorhandler'); // error handling
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // stripe payment processing
+//const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // stripe payment processing
 
 const VALID_ROLES = ["User", "Player", "CollegeRep", "Moderator", "Admin", "SuperAdmin"]; // list of all valid roles
 
@@ -39,17 +39,6 @@ app.use(session({
       sameSite: 'lax'
     }
   }));
-
-/* DEPRECATED!
-function requireAdminAuth(req, res) {
-    if (!req.session.userId) {
-        return res.sendFile(path.join(__dirname, "public", "login.html"));
-    }
-    if (req.session.role !== 'Admin' && req.session.role !== 'SuperAdmin') {
-        return res.sendFile(path.join(__dirname, "public", "index.html"));
-    }
-}*/
-
 
 // ======================== SERVE PAGES & SESSION CHECKING ========================
 
@@ -871,6 +860,7 @@ app.delete("/delete-user/:userId", verifyRole(["SuperAdmin", "Admin"]), async (r
     }
 });
 
+/*
 // process payment
 app.post('/process-payment', async (req, res) => {
     const { token, amount, teamId, tournamentId } = req.body;
@@ -898,7 +888,7 @@ app.post('/process-payment', async (req, res) => {
       console.error('Payment processing error:', error);
       res.status(500).json({ success: false, message: 'Payment processing failed' });
     }
-  });
+  });*/
 
 // start the server
 app.listen(port);
